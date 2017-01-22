@@ -11,22 +11,24 @@
 # made with graphical interfaces using Tkinter library
 
 from tkinter import *
-import backend
+from backend import Database
+
+database = Database('books.db')
 
 def view_command():
     list1.delete(0,END)
-    rows = backend.view()
+    rows = database.view()
     for row in rows:
         list1.insert(END,row)
 
 def search_command():
     list1.delete(0,END)
-    rows=backend.search(title_text.get(),author_text.get(),year_text.get(),isbn_text.get())
+    rows=database.search(title_text.get(),author_text.get(),year_text.get(),isbn_text.get())
     for row in rows:
         list1.insert(END,row)
 
 def add_command():
-    backend.insert(title_text.get(),author_text.get(),year_text.get(),isbn_text.get())
+    database.insert(title_text.get(),author_text.get(),year_text.get(),isbn_text.get())
     list1.delete(0,END)
     list1.insert(END,(title_text.get(),author_text.get(),year_text.get(),isbn_text.get()))
 
@@ -44,10 +46,10 @@ def get_selected_row(event):
     e4.insert(END,seleted_tuple[4])
 
 def delete_command():
-    backend.delete(seleted_tuple[0])
+    database.delete(seleted_tuple[0])
 
 def update_command():
-    backend.update(seleted_tuple[0],title_text.get(),author_text.get(),year_text.get(),isbn_text.get())
+    database.update(seleted_tuple[0],title_text.get(),author_text.get(),year_text.get(),isbn_text.get())
 
 window = Tk()
 window.wm_title("My Library")
